@@ -13,6 +13,11 @@ def OK():
     StringFinal = stringOne + StringTwo
     print(StringFinal)
     os.system(StringFinal)
+
+def cancel():
+    os.system('shutdown -a')
+
 Button(root, text="OK", command=OK).grid(row=0, column=2)
+Button(root, text="Cancel", command=cancel).grid(row=0, column=3)
 
 root.mainloop()

@@ -5,6 +5,7 @@ from tkinter import *
 import time as tm
 import datetime
 import threading
+import math
 
 root = Tk()
 
@@ -35,10 +36,15 @@ def countdown():
         seconds -= 1
         secondsleft -= 1
         global v
-        if secondsleft <1:
+        if secondsleft < 1:
             v.set("")
             break
-        v.set(str(seconds))
+        
+        hours = math.floor(seconds/3600)
+        minutes = math.floor(seconds/60-hours*60)
+        Seconds = math.floor(seconds-hours*3600-minutes*60)
+        timeStr = "{}H {}M {}S".format(hours, minutes, Seconds)
+        v.set(str(timeStr))
         
         
 

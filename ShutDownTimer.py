@@ -9,15 +9,23 @@ import math
 
 root = Tk()
 
+#text fields
 Label(root, text="Enter time to shut down in minutes: ").grid(row=0, column=0)
-Label(root, text="Time left until shutdown: ").grid(row=1, column=0)
 
 global v
 v = StringVar()
 Label(root, textvariable=v).grid(row=1, column=1)
 
-e=Entry(root, width=10, borderwidth=5)
-e.grid(row=0, column=1)
+#timeentry
+ehours=Entry(root, width=2, borderwidth=1)
+ehours.grid(row=0, column=1)
+Label(root, text="H").grid(row=0, column=2)
+eminutes=Entry(root, width=2, borderwidth=1)
+eminutes.grid(row=0, column=3)
+Label(root, text="M").grid(row=0, column=4)
+eseconds=Entry(root, width=2, borderwidth=1)
+eseconds.grid(row=0, column=5)
+Label(root, text="S").grid(row=0, column=6)
 
 global time 
 time = 0
@@ -43,8 +51,13 @@ def countdown():
         hours = math.floor(seconds/3600)
         minutes = math.floor(seconds/60-hours*60)
         Seconds = math.floor(seconds-hours*3600-minutes*60)
-        timeStr = "{}H {}M {}S".format(hours, minutes, Seconds)
-        v.set(str(timeStr))
+        eseconds.delete(0, END)
+        eminutes.delete(0, END)
+        ehours.delete(0, END)
+        eseconds.insert(0, str(Seconds))
+        eminutes.insert(0, str(minutes))
+        ehours.insert(0, str(hours))
+        
         
         
 
@@ -55,8 +68,10 @@ def OK():
     cancel()
     tm.sleep(1)
     global time
-    time=int(e.get())
-    time=time * 60
+    seconds=int(eseconds.get())
+    minutes=int(eminutes.get())
+    hours=int(ehours.get())
+    time=(hours * 3600)+(minutes*60)+seconds
     stringOne="shutdown /s /t "
     StringTwo = str(time)
     StringFinal = stringOne + StringTwo
@@ -69,7 +84,7 @@ def cancel():
     global secondsleft
     secondsleft=0
 
-Button(root, text="OK", command=OK).grid(row=0, column=2)
-Button(root, text="Cancel", command=cancel).grid(row=0, column=3)
+Button(root, text="OK", command=OK).grid(row=0, column=7)
+Button(root, text="Cancel", command=cancel).grid(row=0, column=8)
 
 root.mainloop()

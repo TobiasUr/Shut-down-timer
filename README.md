@@ -8,3 +8,6 @@ A shutdown timer with a nice GUI
 Just enter time and press ok.
 
 (Timer will run even if you close the window.)
+
+
+<a href="[url](https://github.com/TobiasUr/Shut-down-timer/releases/tag/1.2.2)">Latest version here!</a>

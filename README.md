@@ -10,4 +10,4 @@ Just enter time and press ok.
 (Timer will run even if you close the window.)
 
 
-<a href="/tag/1.2.2](https://github.com/TobiasUr/Shut-down-timer/releases/latest">Latest version here!</a>
+<a href="https://github.com/TobiasUr/Shut-down-timer/releases/latest">Latest version here!</a>

@@ -6,6 +6,9 @@ import time as tm
 import datetime
 import threading
 import math
+from pynput.keyboard import Key, Listener
+import threading
+import sys
 
 root = Tk()
 
@@ -84,7 +87,37 @@ def cancel():
     global secondsleft
     secondsleft=0
 
+
+
+
+
 Button(root, text="OK", command=OK).grid(row=0, column=7)
 Button(root, text="Cancel", command=cancel).grid(row=0, column=8)
 
+def keylisten():
+    def on_release(key):
+        print('{0} release'.format(
+            key))
+        if key == Key.enter:
+            # Stop listener
+            OK()
+
+    # Collect events until released
+    with Listener(
+            on_release=on_release) as listener:
+        listener.join()
+        
+t1 = threading.Thread(target=keylisten)
+t1.start()
+
+def killself():
+    root.destroy()
+    sys.exit()
+    
+
+
+root.protocol("WM_DELETE_WINDOW",  killself)
+
 root.mainloop()
+
+

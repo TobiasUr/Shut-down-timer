@@ -25,9 +25,11 @@ ehours.grid(row=0, column=1)
 Label(root, text="H").grid(row=0, column=2)
 eminutes=Entry(root, width=2, borderwidth=1)
 eminutes.grid(row=0, column=3)
+
 Label(root, text="M").grid(row=0, column=4)
 eseconds=Entry(root, width=2, borderwidth=1)
 eseconds.grid(row=0, column=5)
+eseconds.bind("<Return>", (lambda event: OK())) #listen for enter
 Label(root, text="S").grid(row=0, column=6)
 
 global time 
@@ -94,21 +96,7 @@ def cancel():
 Button(root, text="OK", command=OK).grid(row=0, column=7)
 Button(root, text="Cancel", command=cancel).grid(row=0, column=8)
 
-def keylisten():
-    def on_release(key):
-        print('{0} release'.format(
-            key))
-        if key == Key.enter:
-            # Stop listener
-            OK()
 
-    # Collect events until released
-    with Listener(
-            on_release=on_release) as listener:
-        listener.join()
-        
-t1 = threading.Thread(target=keylisten)
-t1.start()
 
 def killself():
     root.destroy()

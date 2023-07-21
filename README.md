@@ -1,8 +1,7 @@
 # Shut-down-timer
 A shutdown timer with a nice GUI
 
-
-![image](https://github.com/TobiasUr/Shut-down-timer/assets/68461330/cb8d0f6a-760c-480e-a42c-7a1c978e60ec)
+![image](https://github.com/TobiasUr/Shut-down-timer/assets/68461330/6c22c407-61a8-40d8-b236-113a1d445f79)
 
 
 Just enter time and press ok.

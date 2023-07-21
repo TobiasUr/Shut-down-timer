@@ -7,11 +7,12 @@ import datetime
 import threading
 import math
 from pynput.keyboard import Key, Listener
-import threading
 import sys
 
-root = Tk()
-
+#Create root
+root = Tk(screenName="ShutDownTimer")
+#Set size
+root.geometry("393x52")
 #text fields
 Label(root, text="Enter time to shut down in minutes: ").grid(row=0, column=0)
 
@@ -36,8 +37,8 @@ global time
 time = 0
 
 global secondsleft
-
-def countdown():
+#Countdown
+def countdown(ShutdownType):
     global time
     global secondsleft
     secondsleft = time
@@ -62,14 +63,26 @@ def countdown():
         eseconds.insert(0, str(Seconds))
         eminutes.insert(0, str(minutes))
         ehours.insert(0, str(hours))
+        if seconds == 1:
+             print(ShutdownType)
+             if ShutdownType == "Sleep":
+                StringFinal = "timeout /t 0&&rundll32.exe powrprof.dll,SetSuspendState Sleep"
+                print(StringFinal)   
+                os.system(StringFinal)
         
         
-        
+#DropdownMenu 
+options_list = ["Shut Down","Restart", "Sleep"]
+Selected = StringVar(root)
+Selected.set("Shut Down")
+
+drop = OptionMenu(root, Selected, *options_list)     
+drop.grid(row=0, column=7)
 
 
-        
+    
 
-def OK():
+def OK(ShutdownType):
     cancel()
     tm.sleep(1)
     global time
@@ -77,12 +90,18 @@ def OK():
     minutes=int(eminutes.get())
     hours=int(ehours.get())
     time=(hours * 3600)+(minutes*60)+seconds
-    stringOne="shutdown /s /t "
-    StringTwo = str(time)
-    StringFinal = stringOne + StringTwo
-    print(StringFinal)
-    os.system(StringFinal)
-    threading.Thread(target=countdown).start()
+    print(ShutdownType)
+    stringOne ="shutdown /s /t " if ShutdownType == "Shut Down" else ("shutdown /r /t " if ShutdownType == "Restart" else ("psshutdown -d -t " if ShutdownType == "Sleep" else "shutdown /s /t "))
+    if ShutdownType == "Sleep":       
+        threading.Thread(target= lambda: countdown(ShutdownType)).start()
+        
+
+    else:
+        StringTwo = str(time)
+        StringFinal = stringOne + StringTwo
+        print(StringFinal)
+        os.system(StringFinal)
+        threading.Thread(target=countdown).start()
 
 def cancel():
     os.system('shutdown -a')
@@ -91,10 +110,10 @@ def cancel():
 
 
 
-
-
-Button(root, text="OK", command=OK).grid(row=0, column=7)
-Button(root, text="Cancel", command=cancel).grid(row=0, column=8)
+container = Frame(root)
+container.place(relx=0.5, rely=0.75, anchor=CENTER)
+Button(container, text="OK", command= lambda: OK(ShutdownType=Selected.get())).grid(row=0, column=0)
+Button(container, text="Cancel", command=cancel).grid(row=0, column=1)
 
 
 

@@ -101,7 +101,7 @@ def OK(ShutdownType):
         StringFinal = stringOne + StringTwo
         print(StringFinal)
         os.system(StringFinal)
-        threading.Thread(target=countdown).start()
+        threading.Thread(target= lambda: countdown(ShutdownType)).start()
 
 def cancel():
     os.system('shutdown -a')
